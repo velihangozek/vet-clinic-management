@@ -1,6 +1,5 @@
 package org.velihangozek.vet_clinic_management.dto.request.customer;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -12,14 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CustomerSaveRequest {
 
-    @NotBlank
+    @NotBlank(message = "Customer name cannot be blank, empty or null")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "Customer phone cannot be blank, empty or null")
     private String phone;
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "Customer email cannot be blank, empty or null")
+    @Email(message = "Please provide a proper email format")
     private String mail;
 
     private String address;
