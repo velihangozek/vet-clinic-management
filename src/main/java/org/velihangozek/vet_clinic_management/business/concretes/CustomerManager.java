@@ -1,5 +1,8 @@
 package org.velihangozek.vet_clinic_management.business.concretes;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.velihangozek.vet_clinic_management.business.abstracts.ICustomerService;
 import org.velihangozek.vet_clinic_management.core.exception.NotFoundException;
@@ -24,5 +27,11 @@ public class CustomerManager implements ICustomerService {
     public Customer get(Long id) {
         return this.customerRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(Message.notFound("Customer", id)));
+    }
+
+    @Override
+    public Page<Customer> cursor(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return this.customerRepository.findAll(pageable);
     }
 }
