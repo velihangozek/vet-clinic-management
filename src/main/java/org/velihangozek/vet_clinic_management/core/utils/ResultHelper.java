@@ -17,6 +17,10 @@ public class ResultHelper {
         return new ResultData<>(false, Message.VALIDATE_ERROR, 400, data);
     }
 
+    public static Result notFoundError() {
+        return new Result(false, Message.NOT_FOUND, 404);
+    }
+
     public static Result notFoundError(String message) {
         return new Result(false, message, 404);
     }
