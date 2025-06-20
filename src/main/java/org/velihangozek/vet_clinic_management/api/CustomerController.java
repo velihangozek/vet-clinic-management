@@ -5,6 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.velihangozek.vet_clinic_management.business.abstracts.ICustomerService;
 import org.velihangozek.vet_clinic_management.core.config.modelMapper.IModelMapperService;
+import org.velihangozek.vet_clinic_management.core.result.Result;
+import org.velihangozek.vet_clinic_management.core.result.ResultData;
+import org.velihangozek.vet_clinic_management.core.utils.ResultHelper;
 import org.velihangozek.vet_clinic_management.dto.request.customer.CustomerSaveRequest;
 import org.velihangozek.vet_clinic_management.dto.response.customer.CustomerResponse;
 import org.velihangozek.vet_clinic_management.entities.Customer;
@@ -22,9 +25,9 @@ public class CustomerController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public CustomerResponse save(@RequestBody @Valid CustomerSaveRequest customerSaveRequest) {
-        Customer saveCustomer = this.modelMapper.forRequest().map(customerSaveRequest, Customer.class);
-        this.customerService.save(saveCustomer);
-        return this.modelMapper.forResponse().map(saveCustomer, CustomerResponse.class);
+    public ResultData<CustomerResponse> save(@RequestBody @Valid CustomerSaveRequest customerSaveRequest) {
+        Customer customer = this.modelMapper.forRequest().map(customerSaveRequest, Customer.class);
+        Customer savedCustomer = this.customerService.save(customer);
+        return ResultHelper.created(this.modelMapper.forResponse().map(savedCustomer, CustomerResponse.class));
     }
 }
