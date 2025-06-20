@@ -17,4 +17,9 @@ public class CustomerManager implements ICustomerService {
     public Customer save(Customer customer) {
         return this.customerRepository.save(customer);
     }
+
+    @Override
+    public Customer get(Long id) {
+        return this.customerRepository.findById(id).orElseThrow();
+    }
 }

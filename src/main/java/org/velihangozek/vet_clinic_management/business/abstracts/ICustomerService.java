@@ -6,4 +6,6 @@ public interface ICustomerService {
 
     Customer save(Customer customer);
 
+    Customer get(Long id);
+
 }
