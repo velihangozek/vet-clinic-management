@@ -8,4 +8,7 @@ public class ResultHelper {
         return new ResultData<>(true, ResultMessage.CREATED, 201, data);
     }
 
+    public static <T> ResultData<T> validateError(T data) {
+        return new ResultData<>(false, ResultMessage.VALIDATE_ERROR, 400, data);
+    }
 }

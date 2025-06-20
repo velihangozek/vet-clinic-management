@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.velihangozek.vet_clinic_management.core.result.ResultData;
+import org.velihangozek.vet_clinic_management.core.utils.ResultHelper;
 import org.velihangozek.vet_clinic_management.core.utils.ResultMessage;
 
 import java.util.Map;
@@ -25,8 +26,6 @@ public class GlobalExceptionHandler {
                 .stream()
                 .collect(Collectors.toMap(FieldError::getField, Objects.requireNonNull(FieldError::getDefaultMessage)));
 
-        ResultData<Map<String, String>> resultDataList = new ResultData<>(false, ResultMessage.VALIDATE_ERROR, 400, validationErrorList);
-
-        return new ResponseEntity<>(resultDataList, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ResultHelper.validateError(validationErrorList), HttpStatus.BAD_REQUEST);
     }
 }

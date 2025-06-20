@@ -18,7 +18,7 @@ public class CustomerSaveRequest {
     private String phone;
 
     @NotBlank(message = "Customer email cannot be blank, empty or null")
-    @Email(message = "Please provide a proper email format")
+    @Email(message = "Please provide a valid email address")
     private String mail;
 
     private String address;
