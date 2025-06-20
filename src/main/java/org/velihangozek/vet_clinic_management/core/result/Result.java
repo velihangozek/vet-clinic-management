@@ -4,7 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class Result {
-
     private final boolean success;
     private final String message;
     private final int httpCode;
@@ -14,6 +13,4 @@ public class Result {
         this.message = message;
         this.httpCode = httpCode;
     }
-
-
 }
