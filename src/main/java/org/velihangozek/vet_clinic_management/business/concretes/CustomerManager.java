@@ -2,6 +2,8 @@ package org.velihangozek.vet_clinic_management.business.concretes;
 
 import org.springframework.stereotype.Service;
 import org.velihangozek.vet_clinic_management.business.abstracts.ICustomerService;
+import org.velihangozek.vet_clinic_management.core.exception.NotFoundException;
+import org.velihangozek.vet_clinic_management.core.utils.Message;
 import org.velihangozek.vet_clinic_management.entities.Customer;
 import org.velihangozek.vet_clinic_management.repository.CustomerRepository;
 
@@ -20,6 +22,7 @@ public class CustomerManager implements ICustomerService {
 
     @Override
     public Customer get(Long id) {
-        return this.customerRepository.findById(id).orElseThrow();
+        return this.customerRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(Message.notFound("Customer", id)));
     }
 }

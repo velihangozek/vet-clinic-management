@@ -6,9 +6,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.velihangozek.vet_clinic_management.core.result.Result;
 import org.velihangozek.vet_clinic_management.core.result.ResultData;
 import org.velihangozek.vet_clinic_management.core.utils.ResultHelper;
-import org.velihangozek.vet_clinic_management.core.utils.ResultMessage;
 
 import java.util.Map;
 import java.util.Objects;
@@ -27,5 +27,12 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.toMap(FieldError::getField, Objects.requireNonNull(FieldError::getDefaultMessage)));
 
         return new ResponseEntity<>(ResultHelper.validateError(validationErrorList), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<Result> handleNotFoundException(NotFoundException e) {
+
+        return new ResponseEntity<>(ResultHelper.notFoundError(e.getMessage()), HttpStatus.NOT_FOUND);
+
     }
 }
