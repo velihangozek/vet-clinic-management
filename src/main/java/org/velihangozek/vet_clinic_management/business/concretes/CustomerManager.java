@@ -34,4 +34,17 @@ public class CustomerManager implements ICustomerService {
         Pageable pageable = PageRequest.of(page, pageSize);
         return this.customerRepository.findAll(pageable);
     }
+
+    @Override
+    public Customer update(Customer customer) {
+        this.get(customer.getId()); // Check if customer exists
+        return this.customerRepository.save(customer);
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        Customer customer = this.get(id); // Check if customer exists
+        this.customerRepository.delete(customer);
+        return true;
+    }
 }

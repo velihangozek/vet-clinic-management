@@ -16,6 +16,10 @@ public class ResultHelper {
         return new ResultData<>(true, Message.OK, 200, data);
     }
 
+    public static Result ok() {
+        return new Result(true, Message.OK, 200);
+    }
+
     public static <T> ResultData<T> validateError(T data) {
         return new ResultData<>(false, Message.VALIDATE_ERROR, 400, data);
     }
