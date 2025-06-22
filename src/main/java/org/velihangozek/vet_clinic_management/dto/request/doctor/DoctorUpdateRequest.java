@@ -1,4 +1,4 @@
-package org.velihangozek.vet_clinic_management.dto.request.customer;
+package org.velihangozek.vet_clinic_management.dto.request.doctor;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,17 +10,17 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerUpdateRequest {
+public class DoctorUpdateRequest {
     @Positive(message = "ID value must be positive.")
     private Long id;
 
-    @NotBlank(message = "Customer name cannot be blank, empty or null")
+    @NotBlank(message = "Doctor name cannot be blank, empty or null")
     private String name;
 
-    @NotBlank(message = "Customer phone cannot be blank, empty or null")
+    @NotBlank(message = "Doctor phone cannot be blank, empty or null")
     private String phone;
 
-    @NotBlank(message = "Customer email cannot be blank, empty or null")
+    @NotBlank(message = "Doctor email cannot be blank, empty or null")
     @Email(message = "Please provide a valid email address")
     private String mail;
 
