@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "customers")
 @Data
@@ -37,5 +39,8 @@ public class Customer {
 
     @Column(name = "customer_city")
     private String city;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Animal> animalList;
 
 }

@@ -4,20 +4,15 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.velihangozek.vet_clinic_management.business.abstracts.ICustomerService;
 import org.velihangozek.vet_clinic_management.business.abstracts.IDoctorService;
 import org.velihangozek.vet_clinic_management.core.config.modelMapper.IModelMapperService;
 import org.velihangozek.vet_clinic_management.core.result.Result;
 import org.velihangozek.vet_clinic_management.core.result.ResultData;
 import org.velihangozek.vet_clinic_management.core.utils.ResultHelper;
-import org.velihangozek.vet_clinic_management.dto.request.customer.CustomerSaveRequest;
-import org.velihangozek.vet_clinic_management.dto.request.customer.CustomerUpdateRequest;
 import org.velihangozek.vet_clinic_management.dto.request.doctor.DoctorSaveRequest;
 import org.velihangozek.vet_clinic_management.dto.request.doctor.DoctorUpdateRequest;
 import org.velihangozek.vet_clinic_management.dto.response.CursorResponse;
-import org.velihangozek.vet_clinic_management.dto.response.customer.CustomerResponse;
 import org.velihangozek.vet_clinic_management.dto.response.doctor.DoctorResponse;
-import org.velihangozek.vet_clinic_management.entities.Customer;
 import org.velihangozek.vet_clinic_management.entities.Doctor;
 
 @RestController

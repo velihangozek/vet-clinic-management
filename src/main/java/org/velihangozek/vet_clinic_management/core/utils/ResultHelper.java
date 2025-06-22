@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import org.velihangozek.vet_clinic_management.core.result.Result;
 import org.velihangozek.vet_clinic_management.core.result.ResultData;
 import org.velihangozek.vet_clinic_management.dto.response.CursorResponse;
-import org.velihangozek.vet_clinic_management.dto.response.customer.CustomerResponse;
 
 public class ResultHelper {
 
@@ -22,6 +21,10 @@ public class ResultHelper {
 
     public static <T> ResultData<T> validateError(T data) {
         return new ResultData<>(false, Message.VALIDATE_ERROR, 400, data);
+    }
+
+    public static Result validateError(String message) {
+        return new Result(false, message, 400);
     }
 
     public static Result notFoundError() {
