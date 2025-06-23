@@ -9,10 +9,10 @@ public interface IAvailableDateService {
 
     AvailableDate get(Long id);
 
+    Page<AvailableDate> cursor(int page, int pageSize);
+
     AvailableDate update(AvailableDate availableDate);
 
     boolean delete(Long id);
-
-    Page<AvailableDate> cursor(int page, int pageSize);
 
 }

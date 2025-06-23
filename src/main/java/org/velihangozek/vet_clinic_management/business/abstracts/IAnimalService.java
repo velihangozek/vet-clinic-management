@@ -10,10 +10,10 @@ public interface IAnimalService {
 
     Animal get(Long id);
 
+    Page<Animal> cursor(int page, int pageSize);
+
     Animal update(Animal animal);
 
     boolean delete(Long id);
-
-    Page<Animal> cursor(int page, int pageSize);
 
 }

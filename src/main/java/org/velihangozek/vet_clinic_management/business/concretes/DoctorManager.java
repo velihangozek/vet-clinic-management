@@ -7,15 +7,23 @@ import org.springframework.stereotype.Service;
 import org.velihangozek.vet_clinic_management.business.abstracts.IDoctorService;
 import org.velihangozek.vet_clinic_management.core.exception.NotFoundException;
 import org.velihangozek.vet_clinic_management.core.utils.Message;
+import org.velihangozek.vet_clinic_management.entities.AvailableDate;
 import org.velihangozek.vet_clinic_management.entities.Doctor;
+import org.velihangozek.vet_clinic_management.repository.AvailableDateRepository;
 import org.velihangozek.vet_clinic_management.repository.DoctorRepository;
+
+import java.time.LocalDate;
 
 @Service
 public class DoctorManager implements IDoctorService {
     private final DoctorRepository doctorRepository;
+    private final AvailableDateRepository availableDateRepository;
 
-    public DoctorManager(DoctorRepository doctorRepository) {
+    public DoctorManager(
+            DoctorRepository doctorRepository,
+            AvailableDateRepository availableDateRepository) {
         this.doctorRepository = doctorRepository;
+        this.availableDateRepository = availableDateRepository;
     }
 
     @Override
@@ -46,6 +54,16 @@ public class DoctorManager implements IDoctorService {
         Doctor doctor = this.get(id); // Check if doctor exists
         this.doctorRepository.delete(doctor);
         return true;
+    }
+
+    @Override
+    public Doctor assignAvailableDate(Long doctorId, LocalDate availableDate) {
+        Doctor doctor = this.get(doctorId);
+        AvailableDate date = this.availableDateRepository.findByAvailableDate(availableDate)
+                .orElseGet(() -> this.availableDateRepository.save(new AvailableDate(availableDate)));
+        doctor.getAvailableDates().add(date);
+        date.getDoctors().add(doctor); // Bi-directional
+        return this.doctorRepository.save(doctor);
     }
 
 }

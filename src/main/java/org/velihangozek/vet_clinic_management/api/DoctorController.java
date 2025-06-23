@@ -9,6 +9,7 @@ import org.velihangozek.vet_clinic_management.core.config.modelMapper.IModelMapp
 import org.velihangozek.vet_clinic_management.core.result.Result;
 import org.velihangozek.vet_clinic_management.core.result.ResultData;
 import org.velihangozek.vet_clinic_management.core.utils.ResultHelper;
+import org.velihangozek.vet_clinic_management.dto.request.doctor.DoctorAvailableDateAssignRequest;
 import org.velihangozek.vet_clinic_management.dto.request.doctor.DoctorSaveRequest;
 import org.velihangozek.vet_clinic_management.dto.request.doctor.DoctorUpdateRequest;
 import org.velihangozek.vet_clinic_management.dto.response.CursorResponse;
@@ -70,4 +71,15 @@ public class DoctorController {
         this.doctorService.delete(id);
         return ResultHelper.ok();
     }
+
+    @PostMapping("/assign-date")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResultData<DoctorResponse> assignAvailableDate(
+            @RequestBody @Valid DoctorAvailableDateAssignRequest request
+    ) {
+        Doctor doctor = this.doctorService.assignAvailableDate(request.getDoctorId(), request.getAvailableDate());
+        DoctorResponse doctorResponse = modelMapper.forResponse().map(doctor, DoctorResponse.class);
+        return ResultHelper.created(doctorResponse);
+    }
+
 }

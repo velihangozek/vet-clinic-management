@@ -11,10 +11,10 @@ public interface IAnimalVaccineService {
 
     AnimalVaccine get(AnimalVaccineId id);
 
+    Page<AnimalVaccine> cursor(int page, int pageSize);
+
     AnimalVaccine update(AnimalVaccine animalVaccine);
 
     boolean delete(AnimalVaccineId id);
-
-    Page<AnimalVaccine> cursor(int page, int pageSize);
 
 }

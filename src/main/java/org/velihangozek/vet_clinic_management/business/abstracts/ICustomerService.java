@@ -9,9 +9,10 @@ public interface ICustomerService {
 
     Customer get(Long id);
 
+    Page<Customer> cursor(int page, int pageSize);
+
     Customer update(Customer customer);
 
     boolean delete(Long id);
 
-    Page<Customer> cursor(int page, int pageSize);
 }

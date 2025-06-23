@@ -5,13 +5,20 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "doctors")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"availableDates", "appointments"})
 public class Doctor {
 
     @Id
@@ -37,4 +44,16 @@ public class Doctor {
 
     @Column(name = "doctor_city")
     private String city;
+
+    @ManyToMany
+    @JoinTable(
+            name = "doctors2dates",
+            joinColumns = @JoinColumn(name = "doctor2date_doctor_id"),
+            inverseJoinColumns = @JoinColumn(name = "doctor2date_available_date_id")
+    )
+    private Set<AvailableDate> availableDates = new HashSet<>();
+
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Appointment> appointments = new ArrayList<>();
+
 }

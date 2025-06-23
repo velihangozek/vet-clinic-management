@@ -5,8 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.velihangozek.vet_clinic_management.core.result.Result;
 import org.velihangozek.vet_clinic_management.core.result.ResultData;
 import org.velihangozek.vet_clinic_management.core.utils.Message;
@@ -40,7 +42,44 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Result> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
-        String message = Message.MALFORMED_OR_INVALID_JSON + ex.getMostSpecificCause().getMessage();
+
+        Throwable rootCause = ex.getMostSpecificCause();
+
+        if (rootCause instanceof java.time.format.DateTimeParseException) {
+            return new ResponseEntity<>(ResultHelper.validateError(
+                    "Invalid format for date-time field. Expected format: yyyy-MM-dd'T'HH:mm:ss (ISO 8601)"
+            ), HttpStatus.BAD_REQUEST);
+        }
+
+        String message = Message.MALFORMED_OR_INVALID_JSON + rootCause.getMessage();
+        return new ResponseEntity<>(ResultHelper.validateError(message), HttpStatus.BAD_REQUEST);
+
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Result> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        if (ex.getRequiredType() != null && ex.getRequiredType().getSimpleName().equals("LocalDateTime")) {
+            String message = String.format(
+                    "Invalid date-time format for parameter '%s'. Expected format: yyyy-MM-dd'T'HH:mm:ss (ISO 8601)",
+                    ex.getName()
+            );
+            return new ResponseEntity<>(ResultHelper.validateError(message), HttpStatus.BAD_REQUEST);
+        }
+
+        // fallback for other mismatches (optional)
+        return new ResponseEntity<>(ResultHelper.validateError("Invalid request parameter."), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AppointmentConflictException.class)
+    public ResponseEntity<Result> handleAppointmentConflictException(AppointmentConflictException ex) {
+        String message = Message.APPOINTMENT_CONFLICT + ex.getMessage();
+        return new ResponseEntity<>(ResultHelper.validateError(message), HttpStatus.CONFLICT); // 409
+    }
+
+    @ExceptionHandler(org.springframework.web.bind.MissingServletRequestParameterException.class)
+    public ResponseEntity<Result> handleMissingRequestParam(MissingServletRequestParameterException ex) {
+        String message = String.format("Missing required request parameter: '%s'", ex.getParameterName());
         return new ResponseEntity<>(ResultHelper.validateError(message), HttpStatus.BAD_REQUEST);
     }
+
 }

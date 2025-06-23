@@ -3,6 +3,9 @@ package org.velihangozek.vet_clinic_management.dto.response.doctor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.velihangozek.vet_clinic_management.dto.response.availabledate.AvailableDateResponse;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,5 +18,6 @@ public class DoctorResponse {
     private String mail;
     private String address;
     private String city;
+    private List<AvailableDateResponse> availableDates;
 
 }
