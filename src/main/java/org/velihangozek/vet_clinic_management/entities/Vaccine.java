@@ -29,6 +29,7 @@ public class Vaccine {
     @Column(name = "vaccine_code")
     private String code;
 
-    @OneToMany(mappedBy = "vaccine", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "vaccine", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<AnimalVaccine> vaccinations = new ArrayList<>();
+
 }

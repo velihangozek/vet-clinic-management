@@ -76,10 +76,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ResultHelper.validateError(message), HttpStatus.CONFLICT); // 409
     }
 
-    @ExceptionHandler(org.springframework.web.bind.MissingServletRequestParameterException.class)
+    @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<Result> handleMissingRequestParam(MissingServletRequestParameterException ex) {
         String message = String.format("Missing required request parameter: '%s'", ex.getParameterName());
         return new ResponseEntity<>(ResultHelper.validateError(message), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(VaccineConflictException.class)
+    public ResponseEntity<Result> handleVaccineConflict(VaccineConflictException ex) {
+        return new ResponseEntity<>(ResultHelper.validateError(ex.getMessage()), HttpStatus.CONFLICT);
     }
 
 }

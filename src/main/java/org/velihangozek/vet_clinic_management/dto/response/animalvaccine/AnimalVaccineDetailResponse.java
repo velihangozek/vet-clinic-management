@@ -9,11 +9,14 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AnimalVaccineResponse {
+public class AnimalVaccineDetailResponse {
 
     private Long animalId;
+    private String animalName;
+    private String species;
     private Long vaccineId;
-    private LocalDate protectionStartDate;
+    private String vaccineName;
+    private String vaccineCode;
     private LocalDate protectionFinishDate;
 
 }

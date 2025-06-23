@@ -44,7 +44,16 @@ public class AvailableDateManager implements IAvailableDateService {
     @Override
     public boolean delete(Long id) {
         AvailableDate availableDate = this.get(id); // Check if availableDate exists
-        this.availableDateRepository.delete(availableDate);
+
+        // Clear relationships from doctors
+        if (!availableDate.getDoctors().isEmpty()) {
+            availableDate.getDoctors().forEach(doctor -> doctor.getAvailableDates().remove(availableDate));
+            availableDate.getDoctors().clear(); // Clear owning side to avoid further cascade issues
+        }
+
+        this.availableDateRepository.save(availableDate); // Save the dissociation
+        this.availableDateRepository.delete(availableDate); // Now safely delete
+
         return true;
     }
 

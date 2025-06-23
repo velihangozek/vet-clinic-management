@@ -18,6 +18,8 @@ import org.velihangozek.vet_clinic_management.dto.response.customer.CustomerResp
 import org.velihangozek.vet_clinic_management.entities.Animal;
 import org.velihangozek.vet_clinic_management.entities.Customer;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/animals")
 public class AnimalController {
@@ -52,6 +54,26 @@ public class AnimalController {
         Animal animal = this.animalService.get(id);
         AnimalResponse animalResponse = this.modelMapper.forResponse().map(animal, AnimalResponse.class);
         return ResultHelper.success(animalResponse);
+    }
+
+    @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<List<AnimalResponse>> searchByName(@RequestParam("name") String name) {
+        List<Animal> animalList = this.animalService.searchByName(name);
+        List<AnimalResponse> responseList = animalList.stream()
+                .map(animal -> this.modelMapper.forResponse().map(animal, AnimalResponse.class))
+                .toList();
+        return ResultHelper.success(responseList);
+    }
+
+    @GetMapping("/by-customer/{customerId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<List<AnimalResponse>> getAnimalsByCustomerId(@PathVariable Long customerId) {
+        List<Animal> animals = this.animalService.getAnimalsByCustomerId(customerId);
+        List<AnimalResponse> responseList = animals.stream()
+                .map(animal -> this.modelMapper.forResponse().map(animal, AnimalResponse.class))
+                .toList();
+        return ResultHelper.success(responseList);
     }
 
     @GetMapping("/{id}/customer")

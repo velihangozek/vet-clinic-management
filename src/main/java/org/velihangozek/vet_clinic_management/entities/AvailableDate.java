@@ -30,7 +30,7 @@ public class AvailableDate {
     @Column(name = "available_date")
     private LocalDate availableDate;
 
-    @ManyToMany(mappedBy = "availableDates")
+    @ManyToMany(mappedBy = "availableDates", fetch = FetchType.LAZY)
     private Set<Doctor> doctors = new HashSet<>();
 
     public AvailableDate(LocalDate availableDate) {

@@ -45,7 +45,7 @@ public class Doctor {
     @Column(name = "doctor_city")
     private String city;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "doctors2dates",
             joinColumns = @JoinColumn(name = "doctor2date_doctor_id"),
@@ -53,7 +53,7 @@ public class Doctor {
     )
     private Set<AvailableDate> availableDates = new HashSet<>();
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Appointment> appointments = new ArrayList<>();
 
 }

@@ -1,6 +1,7 @@
 package org.velihangozek.vet_clinic_management.api;
 
 import jakarta.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.velihangozek.vet_clinic_management.business.abstracts.IAnimalService;
@@ -10,10 +11,14 @@ import org.velihangozek.vet_clinic_management.core.config.modelMapper.IModelMapp
 import org.velihangozek.vet_clinic_management.core.result.ResultData;
 import org.velihangozek.vet_clinic_management.core.utils.ResultHelper;
 import org.velihangozek.vet_clinic_management.dto.request.animalvaccine.AnimalVaccineSaveRequest;
+import org.velihangozek.vet_clinic_management.dto.response.animalvaccine.AnimalVaccineDetailResponse;
 import org.velihangozek.vet_clinic_management.dto.response.animalvaccine.AnimalVaccineResponse;
 import org.velihangozek.vet_clinic_management.entities.Animal;
 import org.velihangozek.vet_clinic_management.entities.AnimalVaccine;
 import org.velihangozek.vet_clinic_management.entities.Vaccine;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/animals/vaccines")
@@ -52,6 +57,39 @@ public class AnimalVaccineController {
         AnimalVaccine savedAnimalVaccine = this.animalVaccineService.save(animalVaccine);
         AnimalVaccineResponse animalVaccineResponse = this.modelMapper.forResponse().map(savedAnimalVaccine, AnimalVaccineResponse.class);
         return ResultHelper.created(animalVaccineResponse);
+    }
+
+    @GetMapping("/by-animal/{animalId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<List<AnimalVaccineResponse>> getVaccinesByAnimalId(@PathVariable Long animalId) {
+        List<AnimalVaccine> vaccines = this.animalVaccineService.getVaccinesByAnimalId(animalId);
+        List<AnimalVaccineResponse> responseList = vaccines.stream()
+                .map(v -> this.modelMapper.forResponse().map(v, AnimalVaccineResponse.class))
+                .toList();
+        return ResultHelper.success(responseList);
+    }
+
+    @GetMapping("/by-protection-end-date/details")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<List<AnimalVaccineDetailResponse>> getProtectionEndingDetails(
+            @RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+            @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end
+    ) {
+
+        List<AnimalVaccine> list = this.animalVaccineService.getByProtectionFinishDateRange(start, end);
+
+        List<AnimalVaccineDetailResponse> detailResponseList = list.stream()
+                .map(av -> new AnimalVaccineDetailResponse(
+                        av.getAnimal().getId(),
+                        av.getAnimal().getName(),
+                        av.getAnimal().getSpecies(),
+                        av.getVaccine().getId(),
+                        av.getVaccine().getName(),
+                        av.getVaccine().getCode(),
+                        av.getProtectionFinishDate()
+                ))
+                .toList();
+        return ResultHelper.success(detailResponseList);
     }
 
 }

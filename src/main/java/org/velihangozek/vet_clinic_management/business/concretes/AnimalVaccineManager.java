@@ -7,10 +7,14 @@ import org.springframework.stereotype.Service;
 import org.velihangozek.vet_clinic_management.business.abstracts.IAnimalService;
 import org.velihangozek.vet_clinic_management.business.abstracts.IAnimalVaccineService;
 import org.velihangozek.vet_clinic_management.core.exception.NotFoundException;
+import org.velihangozek.vet_clinic_management.core.exception.VaccineConflictException;
 import org.velihangozek.vet_clinic_management.core.utils.Message;
 import org.velihangozek.vet_clinic_management.entities.AnimalVaccine;
 import org.velihangozek.vet_clinic_management.entities.AnimalVaccineId;
 import org.velihangozek.vet_clinic_management.repository.AnimalVaccineRepository;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class AnimalVaccineManager implements IAnimalVaccineService {
@@ -23,13 +27,40 @@ public class AnimalVaccineManager implements IAnimalVaccineService {
 
     @Override
     public AnimalVaccine save(AnimalVaccine animalVaccine) {
+
+        Long animalId = animalVaccine.getAnimal().getId();
+        String vaccineName = animalVaccine.getVaccine().getName();
+        String vaccineCode = animalVaccine.getVaccine().getCode();
+        LocalDate now = LocalDate.now();
+
+        boolean conflictExists = !animalVaccineRepository
+                .findActiveSameVaccines(animalId, vaccineName, vaccineCode, now)
+                .isEmpty();
+
+        if (conflictExists) {
+            throw new VaccineConflictException(
+                    String.format("A valid vaccine (%s - %s) already exists for this animal with future protection date.",
+                            vaccineName, vaccineCode));
+        }
+
         return this.animalVaccineRepository.save(animalVaccine);
+
     }
 
     @Override
     public AnimalVaccine get(AnimalVaccineId id) {
         return this.animalVaccineRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(Message.notFound("AnimalVaccine", id)));
+    }
+
+    @Override
+    public List<AnimalVaccine> getVaccinesByAnimalId(Long animalId) {
+        return this.animalVaccineRepository.findByAnimalId(animalId);
+    }
+
+    @Override
+    public List<AnimalVaccine> getByProtectionFinishDateRange(LocalDate start, LocalDate end) {
+        return this.animalVaccineRepository.findByProtectionFinishDateBetween(start, end);
     }
 
     @Override

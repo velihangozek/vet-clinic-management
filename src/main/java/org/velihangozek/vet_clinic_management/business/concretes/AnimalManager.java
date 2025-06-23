@@ -8,7 +8,10 @@ import org.velihangozek.vet_clinic_management.business.abstracts.IAnimalService;
 import org.velihangozek.vet_clinic_management.core.exception.NotFoundException;
 import org.velihangozek.vet_clinic_management.core.utils.Message;
 import org.velihangozek.vet_clinic_management.entities.Animal;
+import org.velihangozek.vet_clinic_management.entities.Customer;
 import org.velihangozek.vet_clinic_management.repository.AnimalRepository;
+
+import java.util.List;
 
 @Service
 public class AnimalManager implements IAnimalService {
@@ -27,6 +30,16 @@ public class AnimalManager implements IAnimalService {
     public Animal get(Long id) {
         return this.animalRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(Message.notFound("Animal", id)));
+    }
+
+    @Override
+    public List<Animal> searchByName(String name) {
+        return this.animalRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    @Override
+    public List<Animal> getAnimalsByCustomerId(Long customerId) {
+        return this.animalRepository.findByCustomerId(customerId);
     }
 
     @Override

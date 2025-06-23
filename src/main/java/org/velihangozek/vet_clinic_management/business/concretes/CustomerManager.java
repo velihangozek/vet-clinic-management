@@ -10,6 +10,8 @@ import org.velihangozek.vet_clinic_management.core.utils.Message;
 import org.velihangozek.vet_clinic_management.entities.Customer;
 import org.velihangozek.vet_clinic_management.repository.CustomerRepository;
 
+import java.util.List;
+
 @Service
 public class CustomerManager implements ICustomerService {
     private final CustomerRepository customerRepository;
@@ -27,6 +29,11 @@ public class CustomerManager implements ICustomerService {
     public Customer get(Long id) {
         return this.customerRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(Message.notFound("Customer", id)));
+    }
+
+    @Override
+    public List<Customer> searchByName(String name) {
+        return this.customerRepository.findByNameContainingIgnoreCase(name);
     }
 
     @Override

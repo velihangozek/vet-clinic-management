@@ -15,6 +15,8 @@ import org.velihangozek.vet_clinic_management.dto.response.CursorResponse;
 import org.velihangozek.vet_clinic_management.dto.response.customer.CustomerResponse;
 import org.velihangozek.vet_clinic_management.entities.Customer;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/customers")
 public class CustomerController {
@@ -41,6 +43,16 @@ public class CustomerController {
         Customer customer = this.customerService.get(id);
         CustomerResponse customerResponse = this.modelMapper.forResponse().map(customer, CustomerResponse.class);
         return ResultHelper.success(customerResponse);
+    }
+
+    @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
+    public ResultData<List<CustomerResponse>> searchByName(@RequestParam("name") String name) {
+        List<Customer> customerList = this.customerService.searchByName(name);
+        List<CustomerResponse> responseList = customerList.stream()
+                .map(customer -> this.modelMapper.forResponse().map(customer, CustomerResponse.class))
+                .toList();
+        return ResultHelper.success(responseList);
     }
 
     @GetMapping()

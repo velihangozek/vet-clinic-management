@@ -19,13 +19,13 @@ public class AnimalVaccine {
     @EmbeddedId
     private AnimalVaccineId id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("animalId")
     @NotNull
     @JoinColumn(name = "animal2vaccine_animal_id")
     private Animal animal;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("vaccineId")
     @NotNull
     @JoinColumn(name = "animal2vaccine_vaccine_id")

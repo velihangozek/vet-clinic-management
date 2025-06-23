@@ -19,11 +19,11 @@ public class Appointment {
     @Column(name = "appointment_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "appointment_animal_id", nullable = false)
     private Animal animal;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "appointment_doctor_id", nullable = false)
     private Doctor doctor;
 
