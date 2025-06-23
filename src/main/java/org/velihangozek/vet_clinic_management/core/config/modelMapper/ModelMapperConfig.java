@@ -4,7 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.velihangozek.vet_clinic_management.dto.request.animal.AnimalSaveRequest;
+import org.velihangozek.vet_clinic_management.dto.request.animalvaccine.AnimalVaccineSaveRequest;
 import org.velihangozek.vet_clinic_management.entities.Animal;
+import org.velihangozek.vet_clinic_management.entities.AnimalVaccine;
 
 @Configuration
 public class ModelMapperConfig {

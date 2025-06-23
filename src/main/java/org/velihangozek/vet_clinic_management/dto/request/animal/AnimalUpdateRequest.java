@@ -18,6 +18,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class AnimalUpdateRequest {
 
+    @NotNull(message = "Animal id required")
     @Positive(message = "ID value must be positive.")
     private Long id;
 

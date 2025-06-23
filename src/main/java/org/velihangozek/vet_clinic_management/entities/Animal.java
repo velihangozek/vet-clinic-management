@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "animals")
@@ -50,6 +52,9 @@ public class Animal {
     @PastOrPresent
     @Column(name = "animal_date_of_birth")
     private LocalDate dateOfBirth;
+
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AnimalVaccine> vaccinations = new ArrayList<>();
 
     public enum Gender {
         MALE,

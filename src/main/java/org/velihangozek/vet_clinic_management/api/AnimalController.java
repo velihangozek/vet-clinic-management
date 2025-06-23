@@ -12,14 +12,11 @@ import org.velihangozek.vet_clinic_management.core.result.ResultData;
 import org.velihangozek.vet_clinic_management.core.utils.ResultHelper;
 import org.velihangozek.vet_clinic_management.dto.request.animal.AnimalSaveRequest;
 import org.velihangozek.vet_clinic_management.dto.request.animal.AnimalUpdateRequest;
-import org.velihangozek.vet_clinic_management.dto.request.doctor.DoctorUpdateRequest;
 import org.velihangozek.vet_clinic_management.dto.response.CursorResponse;
 import org.velihangozek.vet_clinic_management.dto.response.animal.AnimalResponse;
 import org.velihangozek.vet_clinic_management.dto.response.customer.CustomerResponse;
-import org.velihangozek.vet_clinic_management.dto.response.doctor.DoctorResponse;
 import org.velihangozek.vet_clinic_management.entities.Animal;
 import org.velihangozek.vet_clinic_management.entities.Customer;
-import org.velihangozek.vet_clinic_management.entities.Doctor;
 
 @RestController
 @RequestMapping("/v1/animals")

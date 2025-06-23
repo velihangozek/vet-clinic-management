@@ -2,6 +2,7 @@ package org.velihangozek.vet_clinic_management.dto.request.customer;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerUpdateRequest {
+
+    @NotNull(message = "Customer id required")
     @Positive(message = "ID value must be positive.")
     private Long id;
 
@@ -27,4 +30,5 @@ public class CustomerUpdateRequest {
     private String address;
 
     private String city;
+
 }
