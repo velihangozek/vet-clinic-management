@@ -188,6 +188,50 @@ For static reference, see the detailed API documentation below in this README.
 
 ---
 
+## 🗄️ Database Setup
+
+This project uses **PostgreSQL**. A full backup of the database (including schema and sample data) is included for easy setup.
+
+### 🔄 Restore from `.sql` File
+
+To import the database from the included SQL file:
+
+```bash
+# Create the database (if not already existing)
+createdb vet_clinic
+
+# Restore from the .sql file
+psql -U your_username -d vet_clinic -f database/vet_clinic_management.sql
+```
+
+> 📝 Replace `your_username` with your PostgreSQL user. Ensure `psql` is available in your system PATH.
+
+### ✅ Validate Import
+
+After import, you can connect to the database and check a sample table to confirm:
+
+```bash
+  psql -U your_username -d vet_clinic
+```
+
+Inside the `psql` prompt, run:
+
+```sql
+\dt
+SELECT * FROM animals LIMIT 5;
+```
+---
+
+## 📦 SQL Backup File
+
+The full database dump including schema and sample data is located here:
+
+📁 [`database/vet_clinic_management.sql`](database/vet_clinic_management.sql)
+
+You can open it with any text editor or load it into pgAdmin to view the structure.
+
+---
+
 ## 🧪 Sample Validation
 
 ```java
