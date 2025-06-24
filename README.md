@@ -232,6 +232,44 @@ You can open it with any text editor or load it into pgAdmin to view the structu
 
 ---
 
+## 📜 Postman Collection
+
+All API endpoints of the project are structured in a **Postman Collection**, grouped by their corresponding entities such as Doctor, Animal, Appointment, Vaccine, etc.
+
+### 📁 Collection File Location
+
+📄 [`postman/vet_clinic_management_api.postman_collection.json`](postman/vet_clinic_management_api.postman_collection.json)
+
+> This file includes all request configurations and sample JSON bodies for testing the API endpoints.
+
+---
+
+### ▶️ How to Use the Collection
+
+1. Open [Postman](https://www.postman.com/)
+
+2. Click on **Import**.
+
+3. Choose the file located in the `postman/` directory of this project:
+
+   ```
+   postman/vet_clinic_management_api.postman_collection.json
+   ```
+
+4. After importing, you’ll see requests grouped under folders such as:
+
+  - `Doctor`
+  - `Customer`
+  - `Animal`
+  - `Vaccine`
+  - `AvailableDate`
+  - `Appointment`
+  - `Animal2Vaccine`
+
+5. Select any request, inspect headers/body, and hit **Send** to test the endpoint.
+
+---
+
 ## 🧪 Sample Validation
 
 ```java
