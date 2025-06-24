@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.velihangozek.vet_clinic_management.business.abstracts.IAnimalService;
 import org.velihangozek.vet_clinic_management.business.abstracts.IAnimalVaccineService;
 import org.velihangozek.vet_clinic_management.core.exception.NotFoundException;
 import org.velihangozek.vet_clinic_management.core.exception.VaccineConflictException;

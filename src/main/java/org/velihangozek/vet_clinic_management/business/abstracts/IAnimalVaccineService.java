@@ -1,7 +1,6 @@
 package org.velihangozek.vet_clinic_management.business.abstracts;
 
 import org.springframework.data.domain.Page;
-import org.velihangozek.vet_clinic_management.entities.Animal;
 import org.velihangozek.vet_clinic_management.entities.AnimalVaccine;
 import org.velihangozek.vet_clinic_management.entities.AnimalVaccineId;
 

@@ -8,7 +8,6 @@ import org.velihangozek.vet_clinic_management.business.abstracts.IAnimalService;
 import org.velihangozek.vet_clinic_management.core.exception.NotFoundException;
 import org.velihangozek.vet_clinic_management.core.utils.Message;
 import org.velihangozek.vet_clinic_management.entities.Animal;
-import org.velihangozek.vet_clinic_management.entities.Customer;
 import org.velihangozek.vet_clinic_management.repository.AnimalRepository;
 
 import java.util.List;
