@@ -156,8 +156,6 @@ For static reference, see the detailed API documentation below in this README.
 - `GET /v1/animals/vaccines/by-animal/{animalId}`
 - `GET /v1/animals/vaccines/by-protection-end-date/details?start={startDate}&end={endDate}`
 
-***(For full details and interactive documentation, refer to Swagger UI)***
-
 ### ✅ Vaccines
 
 - `POST /v1/vaccines`
@@ -165,6 +163,8 @@ For static reference, see the detailed API documentation below in this README.
 - `GET /v1/vaccines`
 - `PUT /v1/vaccines`
 - `DELETE /v1/vaccines/{id}`
+
+***(For full details and interactive documentation, refer to Swagger UI)***
 
 ---
 
